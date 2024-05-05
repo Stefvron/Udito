@@ -21,6 +21,7 @@ const downloadGridIn = document.getElementById("downloadResultGrid");
 const unmodImg = document.getElementById("unmod");
 const sourceImg = document.getElementById("source");
 const previewImg = document.getElementById("preview");
+const info = document.getElementById("info");
 
 // Dictionaries
 const palettes = {
@@ -121,8 +122,13 @@ function generatePreview(resized=false) {
             const ctx = previewImg.getContext("2d");
             ctx.drawImage(img, 0, 0, xabsIn.value, yabsIn.value);
 
+            info.innerHTML = 'Preview not loaded, because the image is too large. Press "Resize" once to load preview manually.';
+
             applySettings();
-            if(xabsIn.value * yabsIn.value < 500_000 || resized) algorithms[algIn.value](palettes[palIn.value]);
+            if(xabsIn.value * yabsIn.value < 500_000 || resized) {
+                algorithms[algIn.value](palettes[palIn.value]);
+                info.innerHTML = "";
+            }
         };
     };
     fr.readAsDataURL(uploadIn.files[0]);
