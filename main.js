@@ -40,7 +40,7 @@ const algorithms = {
 function dl() {
     const data = previewImg.toDataURL("image/png");
     const newWin = window.open();
-    newWin.document.write("<a id='img' href='" + data + "' download>");
+    newWin.document.write("<a id='img' href='" + data + "' download='udito_image.png'>");
     newWin.document.getElementById("img").click();
 }
 
