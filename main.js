@@ -2,6 +2,7 @@
 const palIn = document.getElementById("pal");
 const algIn = document.getElementById("alg");
 
+const errfacIn = document.getElementById("errfac");
 const satIn = document.getElementById("sat");
 const briIn = document.getElementById("bri");
 const contIn = document.getElementById("cont");
@@ -27,6 +28,10 @@ const info = document.getElementById("info");
 const palettes = {
     "ed": ["000000", "1D2B53", "7E2553", "5F574F", "AB5236", "008751", "83769C", "FF004D", "FF77A8", "29ADFF", "FFA300", "C2C3C7", "00E436", "FFCCAA", "FFEC27", "FFF1E8"],
     "edws": ["000000", "1D2B53", "7E2553", "5F574F", "AB5236", "008751", "83769C", "FF004D", "FF77A8", "29ADFF", "FFA300", "C2C3C7", "00E436", "FFCCAA", "FFEC27", "FFF1E8", "291814", "111D35", "422136", "49333B", "742F29", "125359", "754665", "065AB5", "BE1250", "A28879", "FF6C24", "FF6E59", "00B543", "FF9D81", "A8E72E", "F3EF7D"],
+    "gb": ["000","101","210","311"],
+    "8b": (x) => {return Math.round(x/255)*255},
+    "6b": (x) => {return Math.round(x/64)*255},
+    "4b": (x) => {return Math.round(x/16)*255},
     "p8":  null,
     "p8ws": null,
     "upload": null
@@ -82,7 +87,14 @@ function updateSize(str) {
     }
 }
 
+function resetSliders() {
+    errfacIn.value = 1;
+    satIn.value = 1;
+    briIn.value = 1;
+}
+
 function uploadImage() {
+    resetSliders();
     var img = new Image();
     var fr = new FileReader();
     fr.onload = () => {
@@ -143,8 +155,8 @@ function applySettings() {
             const i = y * (imageData.width * 4) + x * 4;
             const oldpixel = [data[i],data[i+1],data[i+2]]
             var hsv = RGBtoHSV(oldpixel);
-            hsv[1] = Math.min(1, hsv[1] * satIn.value)
-            hsv[2] = Math.min(1, hsv[2] * briIn.value)
+            hsv[1] = hsv[1] * satIn.value; //Math.min(1, hsv[1] * satIn.value)
+            hsv[2] = hsv[2] * briIn.value; //Math.min(1, hsv[2] * briIn.value)
             newpixel = HSVtoRGB(hsv);
 
             data[i] = newpixel[0]; // red
@@ -223,9 +235,9 @@ function RGBtoHSV(rgb) {
     return [h,s,v];
 }
 function HSVtoRGB(hsv) {
-    const h = Math.min(360,hsv[0]);
-    const s = Math.min(1,hsv[1]);
-    const v = Math.min(1,hsv[2]);
+    const h = hsv[0]; //Math.min(360,hsv[0]);
+    const s = hsv[1]; //Math.min(1,hsv[1]);
+    const v = hsv[2]; //Math.min(1,hsv[2]);
     const c = v*s;
     const x = c * (1 - Math.abs(((h/60) % 2) - 1))
     const m = v-c;
@@ -262,20 +274,24 @@ function getNearestColourFromPalette(colour, palette) {
     });
 }
 function getNearestColourFromPaletteSync(colour, palette) {
-    const cAsLab = rgbToLab(colour);
-    var closest = hexToRgb(palette[0]);
-    var delta = deltaE(cAsLab,rgbToLab([...closest]));
-    var i = 1;
-    while(i < palette.length) {
-        const rgb = hexToRgb(palette[i]);
-        const deltaI = deltaE(cAsLab,rgbToLab([...rgb]));
-        if(deltaI < delta) {
-            closest = rgb;
-            delta = deltaI;
+    if(palette instanceof Array) {
+        const cAsLab = rgbToLab(colour);
+        var closest = hexToRgb(palette[0]);
+        var delta = deltaE(cAsLab,rgbToLab([...closest]));
+        var i = 1;
+        while(i < palette.length) {
+            const rgb = hexToRgb(palette[i]);
+            const deltaI = deltaE(cAsLab,rgbToLab([...rgb]));
+            if(deltaI < delta) {
+                closest = rgb;
+                delta = deltaI;
+            }
+            i++;
         }
-        i++;
+        return closest;
+    } else if(palette instanceof Function){
+        return [palette(colour[0]),palette(colour[1]),palette(colour[2])]
     }
-    return closest;
 }
 
 // Colour matching algorithms
@@ -320,9 +336,9 @@ function floydSteinberg(pal) {
             const fact = [(7/16),(3/16),(5/16),(1/16)];
             for(let o = 0; o < offsets.length; o++) {
                 const c = (y+offsets[o][1]) * (imageData.width * 4) + (x+offsets[o][0])  * 4;
-                data[c] += (quantError[0] * fact[o]); // red
-                data[c + 1] += (quantError[1] * fact[o]); // green
-                data[c + 2] += (quantError[2] * fact[o]); // blue
+                data[c] += (quantError[0] * fact[o] * errfacIn.value); // red
+                data[c + 1] += (quantError[1] * fact[o] * errfacIn.value); // green
+                data[c + 2] += (quantError[2] * fact[o] * errfacIn.value); // blue
             }
         }
     }
