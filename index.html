@@ -28,6 +28,9 @@
                 <option value="edws">PICO-8 with secret palette (EveryoneDraw.com)</option>
                 <!--option value="p8">PICO-8</option>
                 <option-- value="p8ws">PICO-8 with secret palette</option-->
+                <option value="rp23">r/place 2023 (incomplete)</option>
+                <option value="rp22">r/place 2022</option>
+                <option value="rp17">r/place 2017</option>
                 <option value="gb">Nintendo GameBoy</option>
             </optgroup>
             <optgroup label="Bit palettes">
@@ -68,7 +71,7 @@
         <label for="blur">Blur</label>
         <input id="blur" type="range" min="0" max="100" value="0" onchange="updatePreview()"-->
         <br><br>
-        <button id="resetVals" onclick="resetSliders()">Reset customisation</button>
+        <button id="resetVals" onclick="resetSliders(); updatePreview()">Reset customisation</button>
 
         <hr>
 
