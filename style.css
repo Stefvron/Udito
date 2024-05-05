@@ -3,7 +3,7 @@
     color: #eee;
     border-color: #111;
 }
-html, p, h1, canvas {
+html, p, h1, canvas, b {
     background-color: #000;
 }
 body {
