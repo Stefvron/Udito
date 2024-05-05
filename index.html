@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script type="text/javascript">
+            function confirmUnload(e) {
+                e.preventDefault();
+                e.returnValue = "Progress will be lost.";
+                return "Progress will be lost."
+            }
+            window.addEventListener("beforeunload", confirmUnload, {capture: true});
+        </script>
+    </head>
+    <body>
+        <h1 style="font-weight: normal;">UDITO (<b>U</b>ntitled <b>DI</b>thering <b>TO</b>ol)</h1>
+
+        <input id="uploadSource" type="file" accept="image/png, image/jpeg" onchange="uploadImage()">
+
+        <hr>
+
+        <label for="pal">Colour palette: </label>
+        <select id="pal" onchange="updatePreview()">
+            <optgroup label="Presets">
+                <option value="ed">PICO-8 (EveryoneDraw.com)</option>
+                <option value="edws">PICO-8 with secret palette (EveryoneDraw.com)</option>
+                <!--option value="p8">PICO-8</option>
+                <option-- value="p8ws">PICO-8 with secret palette</option-->
+            </optgroup>
+            <!--optgroup label="Custom">
+                <option value="upload">Upload as image</option>
+            </optgroup-->
+        </select>
+
+        <label for="alg">Selected Method: </label>
+        <select id="alg" name="alg" onchange="updatePreview()">
+            <optgroup label="No dithering">
+                <option value="nc">Nearest colour</option>
+            </optgroup>
+            <optgroup label="Dithering">
+                <option value="fs">Floyd-Steinberg</option>
+                <!--option value="bm">Bayer matrix</option-->
+            </optgroup>
+        </select>
+
+        <hr>
+
+        <label for="sat">Saturation</label>
+        <input id="sat" type="range" min="0" max="3" value="1" step="0.05" onchange="updatePreview()">
+        <br>
+        <label for="bri">Brightness</label>
+        <input id="bri" type="range" min="0" max="3" value="1" step="0.05" onchange="updatePreview()">
+        <!--br>
+        <label for="cont">Contrast</label>
+        <input id="cont" type="range" min="-5" max="5" value="0" step="0.05" onchange="updatePreview()">
+        <br>
+        <label for="blur">Blur</label>
+        <input id="blur" type="range" min="0" max="100" value="0" onchange="updatePreview()"-->
+
+        <hr>
+
+        <p>In % of the original image:</p>
+        <label for="xperc">Width</label>
+        <input id="xperc" type="number" min="0" max="10000" value="100" oninput="updateSize('xp')">
+        <label for="yperc">Height</label>
+        <input id="yperc" type="number" min="0" max="10000" value="100" oninput="updateSize('yp')" disabled>
+        <label for="lockRatio">Same</label>
+        <input id="lockRatio" type="checkbox"  oninput="updateSize('lock')" checked>
+        <br>
+
+        <p>In absolute values:</p>
+        <label for="xabs">Width</label>
+        <input id="xabs" type="number" min="0" max="0" value="0" oninput="updateSize('xa')" style="width: 100px;">
+        <label for="yabs">Height</label>
+        <input id="yabs" type="number" min="0" max="0" value="0" oninput="updateSize('ya')" style="width: 100px;">
+        <br><br>
+        <button id="resize" onclick="updatePreview()">Resize</button><p>(Press to resize and if dimensions are too large for the auto-preview.)</p>
+
+        <hr>
+
+        <canvas id="unmod" width="0" height="0"></canvas><canvas id="source"></canvas><canvas id="preview"></canvas>
+
+        <hr>
+
+        <button id="downloadResult" onclick="dl()">Download result</button><!--button id="downloadResultGrid">Download result 10x with grid</button-->
+
+
+        <script src="main.js"></script>
+    </body>
+</html>
