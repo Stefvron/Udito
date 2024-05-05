@@ -44,7 +44,8 @@ function dl() {
     newWin.document.getElementById("img").click();
 }
 
-function updatePreview(resized=false) {
+function updatePreview(resized) {
+    resized = resized || false;
     generatePreview(resized)
 }
 
@@ -95,10 +96,11 @@ function uploadImage() {
         };
     };
     fr.readAsDataURL(uploadIn.files[0]);
-    generatePreview();
+    generatePreview(false);
 }
 
 function generatePreview(resized=false) {
+    resized = resized || false;
     var img = new Image();
     var fr = new FileReader();
     fr.onload = () => {
