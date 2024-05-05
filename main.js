@@ -38,8 +38,10 @@ const algorithms = {
 
 // Logic
 function dl() {
-    const data = previewImg.toDataURL();
-    window.open(data.replace("image/png","image/octet-stream"));
+    const data = previewImg.toDataURL("image/png");
+    const newWin = window.open();
+    newWin.document.write("<a id='img' href='" + data + "' download>");
+    newWin.document.getElementById("img").click();
 }
 
 function updatePreview(resized=false) {
