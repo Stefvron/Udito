@@ -137,7 +137,7 @@ function generatePreview(resized=false) {
             const ctx = previewImg.getContext("2d");
             ctx.drawImage(img, 0, 0, xabsIn.value, yabsIn.value);
 
-            info.innerHTML = 'Preview not loaded, because the image is too large. Press "Resize" once to load preview manually.';
+            info.innerHTML = 'Preview was not loaded automatically, because the dimensions are larger than advised. Press "Resize" once to load the preview manually.';
 
             applySettings();
             if(xabsIn.value * yabsIn.value < 500_000 || resized) {
