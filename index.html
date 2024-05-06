@@ -43,7 +43,7 @@
             </optgroup-->
         </select>
 
-        <label for="alg">Selected Method: </label>
+        <label for="alg">Method: </label>
         <select id="alg" name="alg" onchange="updatePreview()">
             <optgroup label="No dithering">
                 <option value="nc">Nearest colour</option>
@@ -80,7 +80,7 @@
         <input id="xperc" type="number" min="0" max="10000" value="100" oninput="updateSize('xp')">
         <label for="yperc">Height</label>
         <input id="yperc" type="number" min="0" max="10000" value="100" oninput="updateSize('yp')" disabled>
-        <label for="lockRatio">Same</label>
+        <label for="lockRatio">Keep original aspect ratio</label>
         <input id="lockRatio" type="checkbox"  oninput="updateSize('lock')" checked>
         <br>
 
