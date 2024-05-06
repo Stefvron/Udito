@@ -32,9 +32,9 @@ const palettes = {
     "rp23": ["ff4500","ffa800","ffd635","00a368","7eed56","2450a4","3690ea","51e9f4","811e9f","b44ac0","ff99aa","9c6926","000000","898d90","ffffff"],
     "rp22": ["6d001a","be0039","ff4500","ffa800","ffd635","fff8b8","00a368","00cc78","7eed56","00756f","009eaa","00ccc0","2450a4","3690ea","51e9f4","493ac1","6a5cff","94b3ff","811e9f","b44ac0","e4abff","de107f","ff3881","ff99aa","6d482f","9c6926","ffb470","000000","515252","898d90","d4d7d9","ffffff"],
     "rp17": ["FFFFFF","E4E4E4","888888","222222","FFA7D1","E50000","E59500","A06A42","E5D900","94E044","02BE01","00D3DD","0083C7","0000EA","CF6EE4","820080"],
-    "8b": (x) => {return Math.round(x/255)*255},
-    "6b": (x) => {return Math.round(x/64)*255},
-    "4b": (x) => {return Math.round(x/16)*255},
+    "8b": (x) => {return Math.floor(x)},
+    "6b": (x) => {return Math.floor(x/64)64},
+    "4b": (x) => {return Math.floor(x/16)*16},
     "p8":  null,
     "p8ws": null,
     "upload": null
