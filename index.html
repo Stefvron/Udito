@@ -25,13 +25,14 @@
         <select id="pal" onchange="updatePreview()">
             <optgroup label="Popular colour palettes">
                 <option value="ed">PICO-8</option>
-                <option value="edws">PICO-8 with secret palette</option>
+                <option value="edws" selected>PICO-8 with secret palette</option>
                 <!--option value="p8">PICO-8</option>
                 <option-- value="p8ws">PICO-8 with secret palette</option-->
                 <option value="rp23">r/place 2023 (incomplete)</option>
                 <option value="rp22">r/place 2022</option>
                 <option value="rp17">r/place 2017</option>
                 <option value="gb">Nintendo GameBoy</option>
+                <option value="bw">Black and white</option>
             </optgroup>
             <optgroup label="Bit palettes">
                 <option value="8b">8-bit colours</option>
@@ -49,7 +50,7 @@
                 <option value="nc">Nearest colour</option>
             </optgroup>
             <optgroup label="Dithering">
-                <option value="fs">Floyd-Steinberg</option>
+                <option value="fs" selected>Floyd-Steinberg</option>
                 <!--option value="bm">Bayer matrix</option-->
             </optgroup>
         </select>
@@ -57,7 +58,7 @@
         <hr>
 
         <label for="errfac">Error factor</label>
-        <input id="errfac" type="range" min="0" max="1.5" value="1" step="0.05" onchange="updatePreview()">
+        <input id="errfac" type="range" min="0" max="2" value="1" step="0.05" onchange="updatePreview()">
         <br>
         <label for="sat">Saturation</label>
         <input id="sat" type="range" min="0" max="3" value="1" step="0.05" onchange="updatePreview()">
